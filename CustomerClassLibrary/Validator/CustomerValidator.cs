@@ -6,12 +6,12 @@ using CustomerClassLibrary.Localization;
 
 namespace CustomerClassLibrary.Validator
 {
-	public class CustomerValidator
+	public class CustomerValidator : TextValidatorBase
 	{
-		private const int _name_max_length = 50;
-		private const int _addresses_count_min = 1;
-		private const int _notes_count_min = 1;
-		private const string _phoneNumber_format = "E.164";
+		private static readonly int _name_max_length = 50;
+		private static readonly int _addresses_count_min = 1;
+		private static readonly int _notes_count_min = 1;
+		private static readonly string _phoneNumber_format = "E.164";
 
 		public static ValidationResult Validate(Customer customer)
 		{
@@ -133,15 +133,15 @@ namespace CustomerClassLibrary.Validator
 			return result;
 		}
 
-		/// <summary>
-		/// Returns <see langword="true"/> if the text consists of white-space characters; 
-		/// otherwise, <see langword="false"/>.
-		/// </summary>
-		/// <param name="text">The text to check.</param>
-		private static bool IsWhitespace(string text)
-		{
-			return text?.Length > 0 && text.Trim().Length == 0;
-		}
+		///// <summary>
+		///// Returns <see langword="true"/> if the text consists of white-space characters; 
+		///// otherwise, <see langword="false"/>.
+		///// </summary>
+		///// <param name="text">The text to check.</param>
+		//private static bool IsWhitespace(string text)
+		//{
+		//	return text?.Length > 0 && text.Trim().Length == 0;
+		//}
 
 		#endregion
 	}
