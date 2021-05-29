@@ -4,7 +4,10 @@ using CustomerClassLibrary.Localization;
 
 namespace CustomerClassLibrary.Validator
 {
-	public class AddressValidator : TextValidatorBase
+	/// <summary>
+	/// The validator of <see cref="Address"/> objects.
+	/// </summary>
+	public class AddressValidator
 	{
 		private static readonly int _line_max_length = 100;
 		private static readonly int _city_max_length = 50;
@@ -36,7 +39,7 @@ namespace CustomerClassLibrary.Validator
 				// Required.
 				result.AddError(ValidationRules.ADDRESS_LINE_REQUIRED);
 			}
-			else if (IsWhitespace(line))
+			else if (TextValidationHelper.IsWhitespace(line))
 			{
 				result.AddError(ValidationRules.ADDRESS_LINE_WHITESPACE);
 			}
@@ -55,7 +58,7 @@ namespace CustomerClassLibrary.Validator
 				// Optional.
 				return result;
 			}
-			else if (IsWhitespace(line2))
+			else if (TextValidationHelper.IsWhitespace(line2))
 			{
 				result.AddError(ValidationRules.ADDRESS_LINE2_WHITESPACE);
 			}
@@ -74,7 +77,7 @@ namespace CustomerClassLibrary.Validator
 				// Required.
 				result.AddError(ValidationRules.ADDRESS_CITY_REQUIRED);
 			}
-			else if (IsWhitespace(city))
+			else if (TextValidationHelper.IsWhitespace(city))
 			{
 				result.AddError(ValidationRules.ADDRESS_CITY_WHITESPACE);
 			}
@@ -92,7 +95,7 @@ namespace CustomerClassLibrary.Validator
 				// Required.
 				result.AddError(ValidationRules.ADDRESS_POSTAL_CODE_REQUIRED);
 			}
-			else if (IsWhitespace(postalCode))
+			else if (TextValidationHelper.IsWhitespace(postalCode))
 			{
 				result.AddError(ValidationRules.ADDRESS_POSTAL_CODE_WHITESPACE);
 			}
@@ -110,7 +113,7 @@ namespace CustomerClassLibrary.Validator
 				// Required.
 				result.AddError(ValidationRules.ADDRESS_STATE_REQUIRED);
 			}
-			else if (IsWhitespace(state))
+			else if (TextValidationHelper.IsWhitespace(state))
 			{
 				result.AddError(ValidationRules.ADDRESS_STATE_WHITESPACE);
 			}
@@ -128,7 +131,7 @@ namespace CustomerClassLibrary.Validator
 				// Required.
 				result.AddError(ValidationRules.ADDRESS_COUNTRY_REQUIRED);
 			}
-			else if (IsWhitespace(country))
+			else if (TextValidationHelper.IsWhitespace(country))
 			{
 				result.AddError(ValidationRules.ADDRESS_COUNTRY_WHITESPACE);
 			}

@@ -23,30 +23,27 @@ namespace CustomerClassLibrary.Tests.Entity
 		[Fact]
 		public void ShouldSetCustomerProperties()
 		{
-			var firstName = "first name";
-			var lastName = "last name";
+			var text = "a";
 			var addresses = new List<Address>();
-			var phoneNumber = "phone number";
-			var email = "e-mail";
 			var notes = new List<string>();
-			var totalPurchasesAmount = 2;
+			var total = 2m;
 
 			Customer customer = new();
-			customer.FirstName = firstName;
-			customer.LastName = lastName;
+			customer.FirstName = text;
+			customer.LastName = text;
 			customer.Addresses = addresses;
-			customer.PhoneNumber = phoneNumber;
-			customer.Email = email;
+			customer.PhoneNumber = text;
+			customer.Email = text;
 			customer.Notes = notes;
-			customer.TotalPurchasesAmount = totalPurchasesAmount;
+			customer.TotalPurchasesAmount = total;
 
-			Assert.Equal(firstName, customer.FirstName);
-			Assert.Equal(lastName, customer.LastName);
+			Assert.Equal(text, customer.FirstName);
+			Assert.Equal(text, customer.LastName);
 			Assert.Equal(addresses, customer.Addresses);
-			Assert.Equal(phoneNumber, customer.PhoneNumber);
-			Assert.Equal(email, customer.Email);
+			Assert.Equal(text, customer.PhoneNumber);
+			Assert.Equal(text, customer.Email);
 			Assert.Equal(notes, customer.Notes);
-			Assert.Equal(totalPurchasesAmount, customer.TotalPurchasesAmount);
+			Assert.Equal(total, customer.TotalPurchasesAmount);
 		}
 	}
 }

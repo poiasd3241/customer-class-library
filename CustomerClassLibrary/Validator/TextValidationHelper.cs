@@ -2,16 +2,18 @@
 
 namespace CustomerClassLibrary.Validator
 {
-	public class TextValidatorBase
+	public class TextValidationHelper
 	{
 		/// <summary>
-		/// Returns <see langword="true"/> if the text consists of white-space characters; 
+		/// Returns <see langword="true"/> if the text consists of whitespace characters; 
 		/// otherwise, <see langword="false"/>.
+		/// <br/>
+		/// Empty string ("") is not considered a whitespace.
 		/// </summary>
 		/// <param name="text">The text to check.</param>
-		protected static bool IsWhitespace(string text)
+		public static bool IsWhitespace(string text)
 		{
-			if (text == null)
+			if (text == null || text == "")
 			{
 				return false;
 			}

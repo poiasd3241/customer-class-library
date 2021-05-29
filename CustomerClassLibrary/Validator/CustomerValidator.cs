@@ -1,148 +1,48 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using CustomerClassLibrary.Entity;
+﻿using CustomerClassLibrary.Entity;
 using CustomerClassLibrary.Localization;
+using FluentValidation;
 
 namespace CustomerClassLibrary.Validator
 {
-	public class CustomerValidator : TextValidatorBase
+	/// <summary>
+	/// The fluent validator of <see cref="Customer"/> objects.
+	/// </summary>
+	public class CustomerValidator : AbstractValidator<Customer>
 	{
 		private static readonly int _name_max_length = 50;
-		private static readonly int _addresses_count_min = 1;
-		private static readonly int _notes_count_min = 1;
 		private static readonly string _phoneNumber_format = "E.164";
 
-		public static ValidationResult Validate(Customer customer)
+		public CustomerValidator()
 		{
-			ValidationResult result = new();
+			// Optional
+			RuleFor(customer => customer.FirstName).Cascade(CascadeMode.Stop)
+				.NotWhitespace().WithMessage(ValidationRules.PERSON_FIRST_NAME_WHITESPACE)
+				.MaximumLength(_name_max_length).WithMessage(string.Format(ValidationRules.PERSON_FIRST_NAME_MAX_LENGTH, _name_max_length))
+					.When(customer => string.IsNullOrEmpty(customer.FirstName) == false, ApplyConditionTo.CurrentValidator);
 
-			ValidateFirstName(customer.FirstName, result);
-			ValidateLastName(customer.LastName, result);
-			ValidateAddresses(customer.Addresses, result);
-			ValidatePhoneNumber(customer.PhoneNumber, result);
-			ValidateEmail(customer.Email, result);
-			ValidateNotes(customer.Notes, result);
+			RuleFor(customer => customer.LastName).Cascade(CascadeMode.Stop)
+				.NotNullNorEmpty().WithMessage(ValidationRules.PERSON_LAST_NAME_REQUIRED)
+				.NotWhitespace().WithMessage(ValidationRules.PERSON_LAST_NAME_WHITESPACE)
+				.MaximumLength(_name_max_length).WithMessage(string.Format(ValidationRules.PERSON_LAST_NAME_MAX_LENGTH, _name_max_length));
 
-			return result;
+			RuleFor(customer => customer.Addresses)
+				.NotNullNorEmpty().WithMessage(ValidationRules.CUSTOMER_ADDRESSES_COUNT_MIN);
+
+			// Optional
+			RuleFor(customer => customer.PhoneNumber).Cascade(CascadeMode.Stop)
+				.NotWhitespace().WithMessage(ValidationRules.CUSTOMER_PHONE_NUMBER_WHITESPACE)
+				.PhoneNumberFormatE164().WithMessage(string.Format(ValidationRules.CUSTOMER_PHONE_NUMBER_FORMAT, _phoneNumber_format))
+					.When(customer => string.IsNullOrEmpty(customer.PhoneNumber) == false, ApplyConditionTo.CurrentValidator);
+
+			// Optional
+			RuleFor(customer => customer.Email).Cascade(CascadeMode.Stop)
+				.NotWhitespace().WithMessage(ValidationRules.CUSTOMER_EMAIL_WHITESPACE)
+				.Email().WithMessage(ValidationRules.CUSTOMER_EMAIL_FORMAT)
+					.When(customer => string.IsNullOrEmpty(customer.Email) == false, ApplyConditionTo.CurrentValidator);
+
+			RuleFor(customer => customer.Notes).Cascade(CascadeMode.Stop)
+				.NotNullNorEmpty().WithMessage(ValidationRules.CUSTOMER_NOTES_COUNT_MIN)
+				.NoAnyNullOrEmptyOrWhitespaceElements().WithMessage(ValidationRules.CUSTOMER_NOTES_TEXT_NULL_EMPTY_OR_WHITESPACE);
 		}
-
-		#region Private Methods
-
-		private static ValidationResult ValidateFirstName(string firstName, ValidationResult result)
-		{
-			if (string.IsNullOrEmpty(firstName))
-			{
-				// Optional.
-				return result;
-			}
-			else if (IsWhitespace(firstName))
-			{
-				result.AddError(ValidationRules.PERSON_FIRST_NAME_WHITESPACE);
-			}
-			else if (firstName.Length > _name_max_length)
-			{
-				result.AddError(string.Format(ValidationRules.PERSON_FIRST_NAME_MAX_LENGTH, _name_max_length));
-			}
-
-			return result;
-		}
-		private static ValidationResult ValidateLastName(string lastName, ValidationResult result)
-		{
-			if (string.IsNullOrEmpty(lastName))
-			{
-				// Required.
-				result.AddError(ValidationRules.PERSON_LAST_NAME_REQUIRED);
-			}
-			else if (IsWhitespace(lastName))
-			{
-				result.AddError(ValidationRules.PERSON_LAST_NAME_WHITESPACE);
-			}
-			else if (lastName.Length > _name_max_length)
-			{
-				result.AddError(string.Format(ValidationRules.PERSON_LAST_NAME_MAX_LENGTH, _name_max_length));
-			}
-
-			return result;
-		}
-		private static ValidationResult ValidateAddresses(List<Address> addresses, ValidationResult result)
-		{
-			if (addresses == null || addresses.Count < _addresses_count_min)
-			{
-				result.AddError(string.Format(ValidationRules.CUSTOMER_ADDRESSES_COUNT_MIN, _addresses_count_min));
-			}
-
-			return result;
-		}
-		private static ValidationResult ValidatePhoneNumber(string phoneNumber, ValidationResult result)
-		{
-			if (string.IsNullOrEmpty(phoneNumber))
-			{
-				// Optional.
-				return result;
-			}
-			else if (IsWhitespace(phoneNumber))
-			{
-				result.AddError(ValidationRules.CUSTOMER_PHONE_NUMBER_WHITESPACE);
-			}
-			else
-			{
-				var phoneNumberPatternE164 = "^\\+?[1-9]\\d{1,14}$";
-				if (Regex.IsMatch(phoneNumber, phoneNumberPatternE164) == false)
-				{
-					result.AddError(string.Format(ValidationRules.CUSTOMER_PHONE_NUMBER_FORMAT, _phoneNumber_format));
-				}
-			}
-
-			return result;
-		}
-		private static ValidationResult ValidateEmail(string email, ValidationResult result)
-		{
-			if (string.IsNullOrEmpty(email))
-			{
-				// Optional.
-				return result;
-			}
-			else if (IsWhitespace(email))
-			{
-				result.AddError(ValidationRules.CUSTOMER_EMAIL_WHITESPACE);
-			}
-			else
-			{
-				var emailPattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
-					@"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
-				if (Regex.IsMatch(email, emailPattern, RegexOptions.IgnoreCase) == false)
-				{
-					result.AddError(ValidationRules.CUSTOMER_EMAIL_FORMAT);
-				}
-			}
-
-			return result;
-		}
-		private static ValidationResult ValidateNotes(List<string> notes, ValidationResult result)
-		{
-			if (notes == null || notes.Count < _notes_count_min)
-			{
-				result.AddError(string.Format(ValidationRules.CUSTOMER_NOTES_COUNT_MIN, _notes_count_min));
-			}
-			else if (notes.Any(note => string.IsNullOrWhiteSpace(note)))
-			{
-				result.AddError(ValidationRules.CUSTOMER_NOTES_TEXT_EMPTY_OR_WHITESPACE);
-			}
-
-			return result;
-		}
-
-		///// <summary>
-		///// Returns <see langword="true"/> if the text consists of white-space characters; 
-		///// otherwise, <see langword="false"/>.
-		///// </summary>
-		///// <param name="text">The text to check.</param>
-		//private static bool IsWhitespace(string text)
-		//{
-		//	return text?.Length > 0 && text.Trim().Length == 0;
-		//}
-
-		#endregion
 	}
 }
