@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CustomerClassLibrary.Entity;
+using CustomerClassLibrary.Entities;
 using Xunit;
 
-namespace CustomerClassLibrary.Tests.Entity
+namespace CustomerClassLibrary.Tests.Entities
 {
 	public class CustomerTests
 	{

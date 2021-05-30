@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CustomerClassLibrary.Validator
+namespace CustomerClassLibrary.Validators
 {
 	public class ValidationResult
 	{

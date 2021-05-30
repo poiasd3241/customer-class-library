@@ -1,8 +1,8 @@
-﻿using CustomerClassLibrary.Entity;
+﻿using CustomerClassLibrary.Entities;
 using CustomerClassLibrary.Localization;
 using FluentValidation;
 
-namespace CustomerClassLibrary.Validator
+namespace CustomerClassLibrary.Validators
 {
 	/// <summary>
 	/// The fluent validator of <see cref="Customer"/> objects.

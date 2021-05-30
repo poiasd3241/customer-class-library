@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CustomerClassLibrary.Entity;
+using CustomerClassLibrary.Entities;
 using CustomerClassLibrary.Localization;
 
-namespace CustomerClassLibrary.Validator
+namespace CustomerClassLibrary.Validators
 {
 	/// <summary>
 	/// The validator of <see cref="Address"/> objects.

@@ -1,4 +1,4 @@
-﻿namespace CustomerClassLibrary.Enum
+﻿namespace CustomerClassLibrary.Enums
 {
 	public enum AddressType
 	{

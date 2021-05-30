@@ -1,8 +1,8 @@
-﻿using CustomerClassLibrary.Entity;
-using CustomerClassLibrary.Enum;
+﻿using CustomerClassLibrary.Entities;
+using CustomerClassLibrary.Enums;
 using Xunit;
 
-namespace CustomerClassLibrary.Tests.Entity
+namespace CustomerClassLibrary.Tests.Entities
 {
 	public class AddressTests
 	{

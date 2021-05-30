@@ -1,6 +1,6 @@
-﻿using CustomerClassLibrary.Enum;
+﻿using CustomerClassLibrary.Enums;
 
-namespace CustomerClassLibrary.Entity
+namespace CustomerClassLibrary.Entities
 {
 	public class Address
 	{

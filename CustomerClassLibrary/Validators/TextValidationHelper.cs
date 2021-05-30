@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace CustomerClassLibrary.Validator
+namespace CustomerClassLibrary.Validators
 {
 	public class TextValidationHelper
 	{

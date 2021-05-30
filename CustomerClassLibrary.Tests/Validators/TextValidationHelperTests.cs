@@ -1,7 +1,7 @@
-﻿using CustomerClassLibrary.Validator;
+﻿using CustomerClassLibrary.Validators;
 using Xunit;
 
-namespace CustomerClassLibrary.Tests.Validator
+namespace CustomerClassLibrary.Tests.Validators
 {
 	public class TextValidationHelperTests
 	{

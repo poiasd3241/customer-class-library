@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using CustomerClassLibrary.Validator;
+using CustomerClassLibrary.Validators;
 using FluentValidation;
 using Xunit;
 
-namespace CustomerClassLibrary.Tests.Validator
+namespace CustomerClassLibrary.Tests.Validators
 {
 	public class RuleBuilderExtensionsTests
 	{

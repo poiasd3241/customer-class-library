@@ -2,7 +2,7 @@
 using System.Linq;
 using FluentValidation;
 
-namespace CustomerClassLibrary.Validator
+namespace CustomerClassLibrary.Validators
 {
 	/// <summary>
 	/// Extensions for <see cref="IRuleBuilder{T, TProperty}"/>.

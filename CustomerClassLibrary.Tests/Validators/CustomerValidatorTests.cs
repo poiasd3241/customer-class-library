@@ -1,8 +1,8 @@
-﻿using CustomerClassLibrary.Entity;
-using CustomerClassLibrary.Validator;
+﻿using CustomerClassLibrary.Entities;
+using CustomerClassLibrary.Validators;
 using Xunit;
 
-namespace CustomerClassLibrary.Tests.Validator
+namespace CustomerClassLibrary.Tests.Validators
 {
 	public class CustomerValidatorTests
 	{
